@@ -1,9 +1,37 @@
+@font-face {
+  font-family: 'Work Sans';
+  src: url('../public/static/fonts/WorkSans-Regular.ttf');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('../public/static/fonts/WorkSans-Bold.ttf');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('../public/static/fonts/WorkSans-Medium.ttf');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('../public/static/fonts/WorkSans-SemiBold.ttf');
+  font-weight: 600;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  font-family: 'Work Sans', Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+input,button,a,select {
+  font-family: 'Work Sans', Segoe UI, Roboto, Oxygen,
 }
 
 a {
@@ -24,3 +52,7 @@ a {
     background: black;
   }
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

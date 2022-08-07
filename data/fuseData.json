@@ -1,0 +1,50 @@
+[
+  {
+    "_id": "62e9210f258f989fa8363aee",
+    "title": "My first post",
+    "createdAt": "2022-08-02T13:05:19.417Z",
+    "category": "62e938b6d2575e789058b8f9"
+  },
+  {
+    "_id": "62e9318e89c93233048c5de9",
+    "title": "Second post",
+    "createdAt": "2022-08-02T14:15:42.882Z",
+    "category": "62e938c3d2575e789058b8fb"
+  },
+  {
+    "_id": "62ea8c93d2575e789058b900",
+    "title": "Third post",
+    "createdAt": "2022-08-03T14:56:19.099Z",
+    "category": "62ebbfd1d2575e789058b907"
+  },
+  {
+    "_id": "62ea9df8d2575e789058b901",
+    "title": "Forth post",
+    "createdAt": "2022-08-03T16:10:32.493Z",
+    "category": "62eb69f7d2575e789058b905"
+  },
+  {
+    "_id": "62ea9e36d2575e789058b902",
+    "title": "Fifth post",
+    "createdAt": "2022-08-03T16:11:34.162Z",
+    "category": "62ec08a441e2b026bc616752"
+  },
+  {
+    "_id": "62ea9e58d2575e789058b903",
+    "title": "Sixth post",
+    "createdAt": "2022-08-03T16:12:08.561Z",
+    "category": "62ec08d841e2b026bc616756"
+  },
+  {
+    "_id": "62ea9e6ad2575e789058b904",
+    "title": "Seventh post",
+    "createdAt": "2022-08-03T16:12:26.129Z",
+    "category": "62ec08c441e2b026bc616754"
+  },
+  {
+    "_id": "62ec1d9a44841cb11c48ac8e",
+    "title": "Are carbs really that bad for you?",
+    "createdAt": "2022-08-04T19:27:22.655Z",
+    "category": "62ec1d9a44841cb11c48ac8f"
+  }
+]
