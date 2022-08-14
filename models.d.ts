@@ -14,4 +14,5 @@ type PostType = {
   createdAt: Date
   created_by: { firstname: string; lastname: string }
   category: { ref: { _id: string; __v: number; [category: string]: boolean } }[]
+  body?: string
 }

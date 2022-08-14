@@ -1,26 +1,30 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import mongooseConnect from '../../utils/mongooseConnect'
-import Post from '../../models/Post'
-import UploadFile from '../../models/UploadFile'
-import Category from '../../models/Category'
-import AdminUser from '../../models/AdminUser'
+import Fuse from 'fuse.js'
+import fuseData from '../../../data/fuseData.json'
+import mongoose from 'mongoose'
+import mongooseConnect from '../../../utils/mongooseConnect'
+import Post from '../../../models/Post'
+import UploadFile from '../../../models/UploadFile'
+import Category from '../../../models/Category'
+import AdminUser from '../../../models/AdminUser'
 
 type Data = {
   status: 'success' | 'fail'
   posts?: PostType[]
   count?: number
+  message?: string
 }
 
 async function getPostsByCategory(
   category: string,
-  page: number
+  page: number,
+  ids: mongoose.Types.ObjectId[]
 ): Promise<{ posts: PostType[]; count: number }> {
-  // Get all the category objects where the provided category is set to true, then get the post that has a refrence to each category object, then get the count of the posts where the provided category is true
   const categoryPosts = await Category.aggregate([
     {
       $facet: {
         data: [
-          { $match: { [category]: true } },
+          { $match: { [category]: true, _id: { $in: ids } } },
           {
             $lookup: {
               from: 'posts',
@@ -46,7 +50,10 @@ async function getPostsByCategory(
           { $skip: page * 5 },
           { $limit: 5 },
         ],
-        count: [{ $match: { [category]: true } }, { $count: 'count' }],
+        count: [
+          { $match: { [category]: true, _id: { $in: ids } } },
+          { $count: 'count' },
+        ],
       },
     },
   ])
@@ -75,7 +82,8 @@ async function getPostsByCategory(
 }
 
 async function getPosts(
-  page: number
+  page: number,
+  ids: string[]
 ): Promise<{ posts: PostType[]; count: number }> {
   const posts = await Post.find(
     {},
@@ -88,6 +96,8 @@ async function getPosts(
       category: 1,
     }
   )
+    .where('_id')
+    .in(ids)
     .populate('cover', 'formats')
     .populate('category.ref')
     .populate('created_by', { firstname: 1, lastname: 1 })
@@ -95,7 +105,7 @@ async function getPosts(
     .skip(page * 5)
     .limit(5)
 
-  const count: number = await Post.find({}).count()
+  const count: number = await Post.find({}).where('_id').in(ids).count()
   return { posts, count }
 }
 
@@ -107,12 +117,23 @@ export default async function handler(
     try {
       await mongooseConnect()
 
-      // Initializing the schemas
-      const coverSchema = UploadFile
-      const categorySchema = Category
-      const adminUserSchema = AdminUser
+      const fuse = new Fuse(fuseData, { includeScore: true, keys: ['title'] })
 
-      // If the page param is provided, pass the page - 1 to skip()
+      let results: Fuse.FuseResult<{
+        _id: string
+        title: string
+        createdAt: string
+        category: string
+      }>[]
+
+      if (typeof req?.query?.searchQuery === 'string') {
+        results = fuse.search(req?.query?.searchQuery)
+      } else {
+        return res
+          .status(400)
+          .json({ status: 'fail', message: 'Search query was not provided' })
+      }
+
       let page
       if (typeof req?.query?.page === 'string') {
         page = Number(req?.query?.page) - 1
@@ -120,17 +141,32 @@ export default async function handler(
         page = 0
       }
 
-      // If the category param is provided, return the category posts
+      // If the category param is provided, search within the posts with the specified category
       if (typeof req?.query?.category === 'string') {
-        const data = await getPostsByCategory(req?.query?.category, page)
+        const ids = results.map((result) => {
+          return new mongoose.Types.ObjectId(result.item.category)
+        })
+
+        const data = await getPostsByCategory(req?.query?.category, page, ids)
 
         return res
           .status(200)
           .json({ status: 'success', posts: data.posts, count: data.count })
       }
 
-      // If no category is provided, get all the posts and the count of those posts
-      const data: { posts: PostType[]; count: number } = await getPosts(page)
+      const pageResults = results.slice(page * 5, page * 5 + 5)
+
+      const ids = pageResults.map((pageResult) => pageResult.item._id)
+
+      // Initializing the schemas
+      const coverSchema = UploadFile
+      const categorySchema = Category
+      const adminUserSchema = AdminUser
+
+      const data: { posts: PostType[]; count: number } = await getPosts(
+        page,
+        ids
+      )
 
       return res
         .status(200)

@@ -7,9 +7,11 @@ const UserSchema = new Schema({
     required: true,
     lowercase: true,
   },
-  // likes: SchemaTypes.ObjectId,
   image: String,
   phone: String,
+  stripeCustomerId: String,
+  membershipExpire: Number,
+  subscriptionId: String,
 })
 
 const User = models.user || model('user', UserSchema)

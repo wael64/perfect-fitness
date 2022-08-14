@@ -26,10 +26,10 @@ const WhyUs = () => {
   ]
   return (
     <section className='mt-12 px-4  lg:px-0 max-w-md mx-auto w-full    sm:max-w-2xl  md:max-w-[1120px] xl:max-w-[1400px]'>
-      <h1 className='font-semibold text-center text-2xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl'>
+      <h1 className='font-semibold text-center text-2xl xs:text-4xl sm:text-5xl lg:text-6xl'>
         WHY US
       </h1>
-      <p className='text-neutral-200 text-sm mt-4 md:mt-6 mb-8  xs:text-lg md:text-xl  lg:text-2xl md:text-center'>
+      <p className='text-neutral-200 text-sm mt-4 md:mt-6 lg:mt-8 mb-8  xs:text-lg md:text-xl  lg:text-2xl md:text-center'>
         To get your desired body, exercise alone isn’t enough. You also need the
         appropriate diet. We help you get both of them right so you can achieve
         your goals the right way.

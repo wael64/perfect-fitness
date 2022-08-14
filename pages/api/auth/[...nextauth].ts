@@ -5,6 +5,11 @@ import EmailProvider from 'next-auth/providers/email'
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter'
 import clientPromise from '../../../utils/mongodb'
 
+import mongooseConnect from '../../../utils/mongooseConnect'
+import User from '../../../models/User'
+
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+
 export default NextAuth({
   providers: [
     EmailProvider({
@@ -23,17 +28,36 @@ export default NextAuth({
   },
   jwt: {
     // The maximum age of the NextAuth.js issued JWT in seconds.
-    // Defaults to `session.maxAge`.
-    maxAge: 60 * 60 * 24 * 30,
+    maxAge: 60 * 60 * 24 * 3,
+  },
+  pages: {
+    signIn: '/login',
   },
   callbacks: {
+    async redirect({ url, baseUrl }) {
+      return baseUrl
+    },
     async jwt({ token, user, account, profile, isNewUser }) {
-      if (user) token.id = user.id
+      if (user) {
+        if (isNewUser) {
+          await mongooseConnect()
+          const stripeCustomer = await stripe.customers.create()
+          await User.updateOne(
+            { email: profile?.email },
+            { stripeCustomerId: stripeCustomer?.id }
+          )
+          user.stripeCustomerId = stripeCustomer?.id
+        }
+
+        token.id = user.id
+        token.stripeCustomerId = user.stripeCustomerId
+      }
       return token
     },
     async session({ session, token, user }) {
       const newSession: any = session
       newSession.user.id = token.id
+      newSession.user.stripeCustomerId = token.stripeCustomerId
       return newSession
     },
   },
