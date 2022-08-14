@@ -15,11 +15,13 @@ import { MantineProvider } from '@mantine/core'
 import { SessionProvider } from 'next-auth/react'
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   const router = useRouter()
 
   useEffect(() => {
+    setLoading(false)
+
     const handleRouteChangeStart = () => {
       setLoading(true)
     }

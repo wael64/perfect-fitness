@@ -41,7 +41,7 @@ const Blog = ({ posts, page, count, category, searchQuery }: BlogProps) => {
   // handle the search input's category dropdown
   const [opened, setOpened] = useState(false)
   const ref = useClickOutside(() => setOpened(false))
-  
+
   const [searchInput, setSearchInput] = useState(searchQuery)
 
   const [currentCategory, setCurrentCategory] = useState(category)
@@ -153,7 +153,7 @@ const Blog = ({ posts, page, count, category, searchQuery }: BlogProps) => {
             </Link>
           </div>
           <Posts posts={posts} count={count} />
-          {count === 0 ? null : (
+          {count <= 5 ? null : (
             <div className='my-4 sm:my-6 md:my-8  flex justify-center'>
               <Pagination
                 total={Math.ceil(count / 5)}
