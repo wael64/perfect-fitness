@@ -5,7 +5,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "node ./lib/populateFuse.mjs &&  next build",
-    "postbuild": "node ./path-to/my-prebuild-script.mjs",
     "start": "next start",
     "lint": "next lint"
   },
