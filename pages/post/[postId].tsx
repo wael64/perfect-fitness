@@ -20,7 +20,6 @@ interface PostProps {
 const Post = ({ post }: PostProps) => {
   const categories = getCategoriesString(post.category[0].ref)
   const content = md.render(post.body)
-  console.log(post)
   return (
     <>
       <Head>
