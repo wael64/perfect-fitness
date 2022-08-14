@@ -4,22 +4,25 @@ import { MouseEventHandler } from 'react'
 interface ButtonProps {
   type: 'button'
   variant: 'filled' | 'outlined'
-  children: string
+  children: React.ReactNode
+  buttonType?: 'submit' | 'reset' | 'button'
   alt?: boolean
   Icon?: JSX.Element
   className?: string
   clickHandler?: MouseEventHandler<HTMLButtonElement>
+  disabled?: boolean
 }
 
 interface LinkProps {
   type: 'link'
   variant: 'filled' | 'outlined'
-  children: string
+  children: React.ReactNode
   link: string
   alt?: boolean
   Icon?: JSX.Element
   className?: string
   clickHandler?: MouseEventHandler<HTMLAnchorElement>
+  disabled?: boolean
 }
 
 type Props = ButtonProps | LinkProps
@@ -33,6 +36,7 @@ const Button = (props: Props) => {
     Icon,
     className,
     clickHandler,
+    disabled,
   } = props
 
   const classString = `font-sans px-[.9em] py-[.2em] font-medium border-[1px]  hover:bg-white  inline-block ${
@@ -43,13 +47,19 @@ const Button = (props: Props) => {
             : 'bg-primary border-primary text-secondary-dark'
         }`
       : 'hover:text-secondary-dark border-primary'
-  } ${Icon ? 'flex justify-between items-center' : ''} ${className}`
+  } ${Icon ? 'flex justify-between items-center' : ''} ${className}
+  ${
+    disabled
+      ? 'cursor-not-allowed bg-gray-200 border-gray-200 hover:bg-gray-200 hover:border-gray-200 text-gray-400 hover:text-gray-400'
+      : ''
+  }`
 
   if (type === 'button') {
     return (
       <button
         className={classString}
         onClick={clickHandler ? clickHandler : () => {}}
+        type={props.buttonType || 'button'}
       >
         {Icon}
         {children}
