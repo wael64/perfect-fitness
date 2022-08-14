@@ -12,12 +12,15 @@ import getCategoriesString from '../../utils/getCategoriesString'
 
 import styles from '../../styles/Post.module.css'
 
+import getPost from '../../utils/get-post'
+
 interface PostProps {
   post: PostType
 }
 const Post = ({ post }: PostProps) => {
   const categories = getCategoriesString(post.category[0].ref)
   const content = md.render(post.body)
+  console.log(post)
   return (
     <>
       <Head>
@@ -56,14 +59,12 @@ const Post = ({ post }: PostProps) => {
 }
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (typeof params?.postId !== 'string') return { props: { post: [] } }
-  const postRes = await fetch(
-    `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/posts/get-post?id=${params.postId}`
-  )
 
-  const postData = await postRes.json()
+  const post = await getPost(params.postId)
+
   return {
     props: {
-      post: postData.post || [],
+      post: post || [],
     },
   }
 }
