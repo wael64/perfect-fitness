@@ -40,7 +40,7 @@ export default async function handler(
 
       await mongooseConnect()
       const stripeData = await StripeModel.findOne({
-        stripeCustomerId: token.stripeCustomerId,
+        customerId: token.stripeCustomerId,
       })
 
       // Check if the user has a stripe object, and if it does, check if his membership hasn't expired yet to add the remaining days to the new membership's trial period.
