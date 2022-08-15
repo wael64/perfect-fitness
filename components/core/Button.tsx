@@ -47,7 +47,7 @@ const Button = (props: Props) => {
             : 'bg-primary border-primary text-secondary-dark'
         }`
       : 'hover:text-secondary-dark border-primary'
-  } ${Icon ? 'flex justify-between items-center' : ''} ${className}
+  } ${Icon ? 'flex justify-between items-center' : ''} 
   ${
     disabled
       ? 'cursor-not-allowed bg-gray-200 border-gray-200 hover:bg-gray-200 hover:border-gray-200 text-gray-400 hover:text-gray-400'
@@ -57,7 +57,7 @@ const Button = (props: Props) => {
   if (type === 'button') {
     return (
       <button
-        className={classString}
+        className={`${classString} ${className}`}
         onClick={clickHandler ? clickHandler : () => {}}
         type={props.buttonType || 'button'}
       >
@@ -72,7 +72,7 @@ const Button = (props: Props) => {
       return (
         <Link href={props.link}>
           <a
-            className={classString}
+            className={`${classString} ${className}`}
             onClick={clickHandler ? clickHandler : () => {}}
           >
             {Icon}

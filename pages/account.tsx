@@ -99,12 +99,6 @@ const Account = ({
         <div className='px-2 max-w-md sm:max-w-lg md:max-w-xl mx-auto'>
           <h1 className='mb-5 font-medium'>Account</h1>
           <div className='flex mb-3'>
-            <p className='basis-1/3 pr-2 text-sm xs:text-base'>Username:</p>
-            <p className='font-medium xs:text-lg basis-2/3'>
-              {userSession?.name}
-            </p>
-          </div>
-          <div className='flex mb-3'>
             <p className='basis-1/3 pr-2 text-sm xs:text-base'>Email:</p>
             <p className='font-medium xs:text-lg basis-2/3'>
               {userSession?.email}

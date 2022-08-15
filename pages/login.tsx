@@ -26,9 +26,9 @@ export default function SignIn({
                 clickHandler={() => signIn(provider.id)}
                 variant='filled'
                 buttonType='submit'
-                className='w-full py-[.4rem]'
+                className='w-full'
               >
-                Sign in with {provider.name}
+                <span className='block py-1'>Sign in with {provider.name}</span>
               </Button>
             </div>
           ))}
@@ -45,13 +45,8 @@ export default function SignIn({
             className='mb-4 text-base bg-white text-secondary-dark font-medium p-1 font-sans placeholder:text-neutral-500 xs:w-72'
             placeholder='Email Address'
           />
-          <Button
-            type='button'
-            variant='filled'
-            className='py-[.4rem]'
-            buttonType='submit'
-          >
-            Sign in with Email
+          <Button type='button' variant='filled' buttonType='submit'>
+            <span className='block py-1'>Sign in with Email</span>
           </Button>
         </form>
       </div>

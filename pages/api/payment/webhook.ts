@@ -27,8 +27,6 @@ const handlePayment = async (session: any) => {
   )
 }
 
-const endpointSecret =
-  'whsec_e4972218c69d9b81830b74e2ea96b0265ed75490656226b6f3ecaee6749cd507'
 
 export default async function handler(
   req: NextApiRequest,
@@ -41,7 +39,7 @@ export default async function handler(
     let event
 
     try {
-      event = stripe.webhooks.constructEvent(payload, sig, endpointSecret)
+      event = stripe.webhooks.constructEvent(payload, sig, process.env.NEXT_PUBLIC_STRIPE_ENDPOINT_SECRET)
     } catch (err: any) {
       console.log('webhook error ', err)
       return res
