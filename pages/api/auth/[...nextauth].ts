@@ -43,7 +43,7 @@ export default NextAuth({
           await mongooseConnect()
           const stripeCustomer = await stripe.customers.create()
           await User.updateOne(
-            { email: profile?.email },
+            { email: profile?.email || token?.email },
             { stripeCustomerId: stripeCustomer?.id }
           )
           user.stripeCustomerId = stripeCustomer?.id

@@ -132,9 +132,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
 
     await mongooseConnect()
+
     const stripeData = await StripeModel.findOne(
       {
-        stripeCustomerId: token?.stripeCustomerId,
+        customerId: token?.stripeCustomerId,
       },
       { _id: 0 }
     ).lean()
