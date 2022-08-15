@@ -20,6 +20,7 @@ interface PostProps {
 const Post = ({ post }: PostProps) => {
   const categories = getCategoriesString(post.category[0].ref)
   const content = md.render(post.body)
+
   return (
     <>
       <Head>
@@ -39,6 +40,8 @@ const Post = ({ post }: PostProps) => {
               <Image
                 src={
                   post?.cover?.formats?.large?.url ||
+                  post?.cover?.formats?.medium?.url ||
+                  post?.cover?.formats?.small?.url ||
                   '/static/images/placeholder-alt.svg'
                 }
                 alt={post.alt || ''}

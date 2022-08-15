@@ -38,6 +38,8 @@ const Posts = ({ posts, count }: { posts: PostType[]; count: number }) => {
                       <Image
                         src={
                           post?.cover?.formats?.large?.url ||
+                          post?.cover?.formats?.medium?.url ||
+                          post?.cover?.formats?.small?.url ||
                           '/static/images/placeholder-alt.svg'
                         }
                         alt={post.alt}

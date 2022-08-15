@@ -160,7 +160,7 @@ const Blog = ({ posts, page, count, category, searchQuery }: BlogProps) => {
                 boundaries={1}
                 siblings={0}
                 size='md'
-                page={page}
+                page={Number(page)}
                 onChange={(e) => {
                   router.push(`${getQuery('current')}&page=${e}`)
                 }}
