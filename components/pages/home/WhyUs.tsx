@@ -25,7 +25,7 @@ const WhyUs = () => {
     },
   ]
   return (
-    <section className='mt-12 px-4  lg:px-0 max-w-md mx-auto w-full    sm:max-w-2xl  md:max-w-[1120px] xl:max-w-[1400px]'>
+    <section className='mt-28 xs:mt-40 md:mt-48 lg:mt-56 xl:mt-60 px-4  lg:px-0 max-w-md mx-auto w-full    sm:max-w-2xl  md:max-w-[1120px] xl:max-w-[1400px]'>
       <h1 className='font-semibold text-center text-2xl xs:text-4xl sm:text-5xl lg:text-6xl'>
         WHY US
       </h1>

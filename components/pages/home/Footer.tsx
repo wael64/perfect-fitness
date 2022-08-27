@@ -6,7 +6,7 @@ import Link from 'next/link'
 const Footer = () => {
   return (
     <footer className='bg-secondary-light'>
-      <div className='flex py-4 justify-between items-center px-4  lg:px-0 sm:mx-auto w-full    sm:max-w-none md:max-w-[1120px] xl:max-w-[1400px] '>
+      <div className='flex py-4 justify-between items-center md:py-6 px-4  lg:px-0 sm:mx-auto w-full    sm:max-w-none md:max-w-[1120px] xl:max-w-[1400px] '>
         <p>&#169; Perfect Fitness. All rights reserved.</p>
         <div className='flex'>
           <Link href=''>
