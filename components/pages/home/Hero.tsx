@@ -25,6 +25,7 @@ const Hero = () => {
           <div className='sm:basis-2/5  sm:bg-primary sm:pl-4 sm:pr-4 sm:py-6 md:py-10 md:pl-6  lg:pr-0 lg:py-14  lg:pl-8 '>
             <div className='relative pt-[100%]  w-auto'>
               <Image
+                priority={true}
                 src='/static/images/person-exercising.png'
                 alt='person exercising'
                 layout='fill'

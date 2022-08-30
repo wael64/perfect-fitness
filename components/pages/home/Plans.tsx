@@ -1,3 +1,4 @@
+import React from 'react'
 import Button from '../../core/Button'
 import getStripe from '../../../utils/get-stripejs'
 import { signIn, useSession } from 'next-auth/react'
@@ -54,6 +55,57 @@ const Plans = () => {
     },
   ]
 
+  const CardComponent = ({
+    card,
+    index,
+  }: {
+    card: {
+      monthlyPrice: string
+      period: string
+      savings: string
+      sessions: string
+      priceId: string
+    }
+    index: number
+  }) => {
+    return (
+      <div className='z-10 bg-white text-secondary-dark flex flex-col justify-between items-start py-4 px-2 mb-5 max-w-[12rem] mx-auto h-[17rem] sm:mb-0 md:max-w-[16rem] md:h-[22rem] md:py-5 md:px-7'>
+        <div className='basis-1/2'>
+          <div className='flex items-end leading-none'>
+            <h1 className='font-bold text-4xl md:text-6xl'>
+              {card.monthlyPrice}$
+            </h1>
+            <p className='text-sm md:text-base'>/mo</p>
+          </div>
+          <p className='text-sm md:text-base text-secondary-transparent'>
+            {card.period}
+          </p>
+          {card.savings && (
+            <p className='font-semibold mt-1 md:mt-2 md:text-lg'>
+              {card.savings}
+            </p>
+          )}
+        </div>
+
+        <div className='basis-1/2 flex flex-col justify-between items-start'>
+          <h3 className='font-medium text-lg md:text-xl'>{card.sessions}</h3>
+          <Button
+            type='button'
+            clickHandler={async () => {
+              joinHandler(card.priceId)
+            }}
+            variant='filled'
+            alt={index !== 1}
+            className='sm:text-lg md:text-xl'
+            disabled={status === 'loading'}
+          >
+            Join now
+          </Button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <section
       className='mt-28 xs:mt-40 md:mt-48 lg:mt-56 xl:mt-60 mb-4 sm:mb-[3.4rem] md:mb-20 px-4  sm:px-0'
@@ -64,60 +116,26 @@ const Plans = () => {
       </h1>
       <div className='relative '>
         <div className='sm:mx-auto w-full    sm:max-w-none md:max-w-[1120px] xl:max-w-[1400px]'>
-          <div className='bg-primary text-center font-semibold text-secondary-dark max-w-[12rem] mx-auto py-1 hidden mt-8 md:mt-10 md:mt-12 sm:block md:max-w-[16rem]  text-lg md:text-xl md:py-2'>
-            Most Popular
-          </div>
-          <div className='sm:flex mt-6 sm:mt-0 '>
+          <div className='sm:flex items-end mt-6 sm:mt-12 '>
             {cards.map((card, index) => {
               return (
-                <>
-                  {index === 1 && (
-                    <div className='bg-primary text-center font-semibold text-secondary-dark max-w-[12rem] mx-auto py-1 sm:hidden'>
-                      Most Popular
-                    </div>
-                  )}
-                  <div className='z-10 bg-white text-secondary-dark flex flex-col justify-between items-start py-4 px-2 mb-5 max-w-[12rem] mx-auto h-[17rem] sm:mb-0 md:max-w-[16rem] md:h-[22rem] md:py-5 md:px-7'>
-                    <div className='basis-1/2'>
-                      <div className='flex items-end leading-none'>
-                        <h1 className='font-bold text-4xl md:text-6xl'>
-                          {card.monthlyPrice}$
-                        </h1>
-                        <p className='text-sm md:text-base'>/mo</p>
+                <React.Fragment key={card.monthlyPrice}>
+                  {index === 1 ? (
+                    <div className='z-10'>
+                      <div className='bg-primary text-center font-semibold text-secondary-dark max-w-[12rem] mx-auto  py-1   md:max-w-[16rem] sm:text-lg md:text-xl md:py-2'>
+                        Most Popular
                       </div>
-                      <p className='text-sm md:text-base text-secondary-transparent'>
-                        {card.period}
-                      </p>
-                      {card.savings && (
-                        <p className='font-semibold mt-1 md:mt-2 md:text-lg'>
-                          {card.savings}
-                        </p>
-                      )}
+                      <CardComponent card={card} index={index} />
                     </div>
-
-                    <div className='basis-1/2 flex flex-col justify-between items-start'>
-                      <h3 className='font-medium text-lg md:text-xl'>
-                        {card.sessions}
-                      </h3>
-                      <Button
-                        type='button'
-                        clickHandler={async () => {
-                          joinHandler(card.priceId)
-                        }}
-                        variant='filled'
-                        alt={index !== 1}
-                        className='sm:text-lg md:text-xl'
-                        disabled={status === 'loading'}
-                      >
-                        Join now
-                      </Button>
-                    </div>
-                  </div>
-                </>
+                  ) : (
+                    <CardComponent card={card} index={index} />
+                  )}
+                </React.Fragment>
               )
             })}
           </div>
         </div>
-        <div className='hidden sm:block absolute w-screen h-24 md:h-[8.6875rem] bg-primary top-[85%]'></div>
+        <div className='hidden sm:block absolute w-screen max-w-full h-24 md:h-[8.6875rem] bg-primary top-[85%]'></div>
       </div>
     </section>
   )
